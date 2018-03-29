@@ -19,9 +19,7 @@ public class ListFilesWithPathFilter {
 		FileSystem fs=FileSystem.get(new URI("hdfs://hadoop01:9000"), conf);
 		FileStatus[] fileStatus = fs.listStatus(new Path("/"));
 		Path[] paths = FileUtil.stat2Paths(fileStatus);
-//		for(Path path:paths){
-//			System.out.println(path.getName());
-//		}
+
 		FileStatus[] listStatus = fs.listStatus(new Path("/"), new PathFilter() {
 			
 			@Override

@@ -19,7 +19,7 @@ public class WirteFileWithProgress {
 
 	public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
 		Configuration conf=new Configuration();
-		FileSystem fs=FileSystem.get(new URI("hdfs://hadoop01:9000"), conf);
+		FileSystem fs=FileSystem.get(new URI("hdfs://itcast00:9000"), conf);
 		FSDataOutputStream fsDataOutputStream = fs.create(new Path("/progress.txt"),new Progressable() {//匿名内部类实现
 			
 			@Override
