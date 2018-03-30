@@ -17,14 +17,14 @@ public class MultiDemo {
 		Job job=Job.getInstance(conf);
 		job.setJarByClass(MultiDemo.class);
 		
-		MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, SpaceMapper.class);//不同的文件设置不同的mapper
-		MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, TMapper.class);
+		MultipleInputs.addInputPath(job, new Path("d://a.txt"), TextInputFormat.class, SpaceMapper.class);//不同的文件设置不同的mapper
+		MultipleInputs.addInputPath(job, new Path("d://b.txt"), TextInputFormat.class, TMapper.class);
 		
 		job.setReducerClass(WCReducer.class);
 		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
-		FileOutputFormat.setOutputPath(job, new Path(args[2]));
+		FileOutputFormat.setOutputPath(job, new Path("d://result"));
 		
 		job.waitForCompletion(true);
 
