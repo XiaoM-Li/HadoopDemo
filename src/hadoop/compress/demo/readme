@@ -1,0 +1,6 @@
+Codec是对压缩-解压缩算法的一种实现。
+在Hadoop中，一个对CompressionCodec接口的实现代表一个codec。例如，GzipCodec包装了gzip的压缩和解压缩算法。
+
+CompressionCodec包含两个函数，可以轻松用于压缩和解压缩数据。
+CompressionOutputStream  createOutputStream（OutputStream out）
+CompressionInputStream  createInputStream（InputStream in）
