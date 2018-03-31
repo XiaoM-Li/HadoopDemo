@@ -20,10 +20,10 @@ public class SeqFileWriteTwo {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {
 		
-		FileSystem fs=FileSystem.get(new URI("hdfs://hadoop01:9000"), new Configuration());
-		SequenceFile.Writer writer=SequenceFile.createWriter(fs, new Configuration(), new Path("/123Seqfile"), Text.class, Text.class);
+		FileSystem fs=FileSystem.get(new URI("hdfs://itcast00:9000"), new Configuration());
+		SequenceFile.Writer writer=SequenceFile.createWriter(fs, new Configuration(), new Path("/abcSeqfile"), Text.class, Text.class);
 		
-		FileStatus[] fileStatus=fs.listStatus(new Path("/123file"));//123file是一个文件夹，下面包含1、2、3三个文件
+		FileStatus[] fileStatus=fs.listStatus(new Path("/seqFile"));//123file是一个文件夹，下面包含1、2、3三个文件
 		for(FileStatus fStatus:fileStatus){
 			byte[] content=new byte[(int)fStatus.getLen()];
 			FSDataInputStream inputStream=fs.open(fStatus.getPath());

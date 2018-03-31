@@ -12,13 +12,16 @@ public class SeqFileRead {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Configuration conf=new Configuration();
-		FileSystem fs=FileSystem.get(new URI("hdfs://hadoop01:9000"), conf);
-		SequenceFile.Reader reader=new SequenceFile.Reader(fs, new Path("/123Seqfile"),conf);
+		FileSystem fs=FileSystem.get(new URI("hdfs://itcast00:9000"), conf);
+		SequenceFile.Reader reader=new SequenceFile.Reader(fs, new Path("/abcSeqfile"),conf);
 		Writable key=(Writable)ReflectionUtils.newInstance(reader.getKeyClass(), conf);
 		Writable value=(Writable)ReflectionUtils.newInstance(reader.getValueClass(), conf);
 		while(reader.next(key, value)){
-			System.out.println(key+"  "+value);
+			System.out.println(key);
+			System.out.println(value);
 		}
+		
+		
 	}
 
 }

@@ -1,0 +1,5 @@
+Hadoop配置文件的优先级：
+1.MapReduce任务初始化的时候，由jobconf或者是job对象指定的值。
+2.客户端节点的*-site.xml.
+3.从节点的*-site.xml
+4.*-default.xml文件中的默认值，这个文件是集群中的所有节点都相同的。
