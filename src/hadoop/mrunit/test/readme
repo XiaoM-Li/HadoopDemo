@@ -1,0 +1,2 @@
+MRUnit是一个测试库，它便于将已知的输入传递给mapper或者检查reducer的输出是否符合预期。
+MRUnit与标准的测试执行框架（Junit）一起使用，因此可以在正常的开发环境中运行MapReduce作业的测试。
