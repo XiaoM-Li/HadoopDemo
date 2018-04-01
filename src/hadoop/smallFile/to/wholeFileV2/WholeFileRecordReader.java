@@ -1,56 +1,59 @@
-package hadoop.smallFile.to.wholeFile;
+package hadoop.smallFile.to.wholeFileV2;
 
 import java.io.IOException;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
-import org.apache.hadoop.mapreduce.lib.input.FileSplit;
+import org.apache.hadoop.mapreduce.lib.input.CombineFileSplit;
 
-public class WholeFileRecordReader extends RecordReader<NullWritable, Text>{//将一个文件作为一条记录读出
+public class WholeFileRecordReader extends RecordReader<Text, Text>{
 
-	private FileSplit fileSpit;
+	private CombineFileSplit combinesplit;
 	private Configuration conf;
+	private Path[] Paths;
+	private int fileNumber;
+	private int position=0;
+	
+	private Text key=new Text();
 	private Text value=new Text();
-	private boolean processed=false;
+	
+	
 	@Override
 	public void initialize(InputSplit split, TaskAttemptContext context) throws IOException, InterruptedException {
-		this.fileSpit=(FileSplit) split;
-		this.conf=context.getConfiguration();		
+		this.combinesplit=(CombineFileSplit) split;
+		this.conf=context.getConfiguration();
+		this.Paths=combinesplit.getPaths();
+		this.fileNumber=combinesplit.getNumPaths();
 	}
 
 	@Override
 	public boolean nextKeyValue() throws IOException, InterruptedException {
 		// TODO 自动生成的方法存根
-		if(!processed){
-			byte[] contents=new byte[(int) fileSpit.getLength()];
-			Path file=fileSpit.getPath();
-			FileSystem fs=file.getFileSystem(conf);
-			FSDataInputStream inputStream =null;
-			try{
-				inputStream= fs.open(file);
-				IOUtils.readFully(inputStream, contents, 0,contents.length);
-				value.set(contents, 0, contents.length);
-			}finally {
-				IOUtils.closeStream(inputStream);
-			}
-			processed=true;
+		if(position<fileNumber){
+			byte[] contents=new byte[(int) combinesplit.getLength(position)];
+			FileSystem fs=FileSystem.get(conf);
+			FSDataInputStream inputStream = fs.open(Paths[position]);
+			IOUtils.readFully(inputStream, contents, 0, contents.length);
+			key.set(Paths[position].toString());
+			value.set(contents, 0, contents.length);
+			
+			position++;
 			return true;
 		}
+		
 		return false;
 	}
 
 	@Override
-	public NullWritable getCurrentKey() throws IOException, InterruptedException {
+	public Text getCurrentKey() throws IOException, InterruptedException {
 		// TODO 自动生成的方法存根
-		return NullWritable.get();
+		return key;
 	}
 
 	@Override
@@ -62,7 +65,7 @@ public class WholeFileRecordReader extends RecordReader<NullWritable, Text>{//将
 	@Override
 	public float getProgress() throws IOException, InterruptedException {
 		// TODO 自动生成的方法存根
-		return processed?1.0f:0.0f;
+		return 0;
 	}
 
 	@Override

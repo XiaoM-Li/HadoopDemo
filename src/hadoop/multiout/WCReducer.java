@@ -20,7 +20,10 @@ public class WCReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
 		for(IntWritable v:values){
 			sum+=v.get();
 		}
-		output.write(key, new IntWritable(sum),key.toString());
+		//采用name-m（或r）-nnnnn形式的文件名，name由程序任意设定的名字，nnnnn是一个指明块号的整数（00000开始）
+		//output.write(key, new IntWritable(sum),key.toString());
+		String basePath=String.format("%s/part/",key.toString());//可以包含文件路径分隔符(/)，可以创建任意深度的子目录
+		output.write(key, new IntWritable(sum),basePath);
 //		context.write(key, new IntWritable(sum));
 	}
 	

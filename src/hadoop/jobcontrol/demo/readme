@@ -1,0 +1,5 @@
+将一个函数分割成多个mapper，然后使用Hadoop自带的ChainMapper类库将它们连接成一个Mapper。还可以结合使用ChainReducer。
+当MapReduce工作流中的作业不止一个时，问题随之而来：如何管理这些作业按顺序执行？
+---有几种方法，其中主要考虑是否有一个线性的作业链或一个更复杂的作业有向无环图（DAG）。
+JobControl
+Oozie

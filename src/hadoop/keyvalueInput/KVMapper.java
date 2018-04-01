@@ -6,9 +6,9 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class KVMapper extends Mapper<IntWritable, Text, IntWritable, Text>{
+public class KVMapper extends Mapper<Text, Text, Text, Text>{
 	@Override
-	protected void map(IntWritable key, Text value,Context context)throws IOException, InterruptedException {
+	protected void map(Text key, Text value,Context context)throws IOException, InterruptedException {
 		context.write(key, value);
 	}
 
