@@ -1,0 +1,2 @@
+hadoop jar join.jar hadoop.joinDemos.SimpleJoinV2 /student_info.txt /class_info.txt /joinout111
+添加了分布式缓存

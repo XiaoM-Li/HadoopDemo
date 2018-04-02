@@ -18,13 +18,13 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class SimpleJoin {
+public class SimpleJoinV1 {
 
 	public static void main(String[] args) throws Exception {
 		Configuration configuration=new Configuration();
 		Job job=Job.getInstance(configuration);
 		
-		job.setJarByClass(SimpleJoin.class);
+		job.setJarByClass(SimpleJoinV1.class);
 		
 		job.setMapperClass(JoinMapper.class);
 		job.setMapOutputKeyClass(Text.class);
