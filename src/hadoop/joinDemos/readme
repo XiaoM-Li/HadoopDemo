@@ -1,2 +1,6 @@
 hadoop jar join.jar hadoop.joinDemos.SimpleJoinV2 /student_info.txt /class_info.txt /joinout111
-添加了分布式缓存
+hadoop jar join.jar hadoop.joinDemos.SimpleJoinV2 -files /root/MyDemo/student_info.txt  /class_info.txt  /joinout111
+添加了分布式缓存，用Java api的话只能是位于共享文件系统中的文件。而GenericOptionsParser选项（例如，-files）所指定的文件可以是本地文件；
+如果是本地文件的话，则会被复制到默认的共享文件系统（一般是HDFS）。-files没有指定文件系统的话自动解析为本地文件
+当用户启动一个作业，Hadoop会把由-files、-archives和-libjars等选项所指定的文件复制到分布式文件系统（一般是HDFS中）。接着，在任务运行之前，
+节点管理器将文件从分布式文件系统复制到本地磁盘（缓存）是任务能够访问文件。这些文件就被视为本地化了。
